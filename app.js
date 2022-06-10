@@ -5,13 +5,12 @@ const taskList = document.querySelector('.taskList');
 const done = document.querySelector('.numberDone');
 const undone = document.querySelector('.numberTask');
 const All = document.querySelector('.numberAll');
+const btn = document.querySelectorAll('.btnFilter');
 const clearBtn = document.querySelector('.clearBtn');
-
 
 
 const getBanco = () => JSON.parse(localStorage.getItem('task')) ?? [];
 const setBanco = (banco) => localStorage.setItem('task', JSON.stringify(banco));
-
 
 
 const criarItem = (tarefa, status, indice) => {
@@ -42,22 +41,73 @@ const inserirItem = () => {
     
 }
 
+
+
+
+const hideTask = (todo) => {
+    todo.forEach(item => {
+        item.classList.remove('d-flex')
+        item.classList.add('hide')
+    });
+}
+
+const filteredUndone = () => {
+    
+    const todo = Array.from(taskList.children).filter(task => {
+        return task.childNodes[1].checked;
+    });
+    hideTask(todo)
+}
+
+const filteredDone = () => {
+    
+    const todo = Array.from(taskList.children).filter(task => {
+        return !task.childNodes[1].checked;
+    });
+    hideTask(todo)
+}
+
+const resetItems = () => {
+    btn.forEach(item => 
+        item.classList.remove('active')
+    );
+}
+
+const filterItems = () => {
+    if(btn[1].classList.contains('active')){
+        filteredUndone();
+    }else if(btn[2].classList.contains('active')){
+        filteredDone();
+    }
+}
+
+btn.forEach(item => {
+    item.addEventListener('click', ()=>{
+	resetItems()
+	item.classList.add('active');
+    atualizarTela();
+    });
+});
+
+
 const limparTela = () => {
     taskList.innerHTML = ''
 }
 
-const atualizarTela = () =>{
+const atualizarTela = () => {
     limparTela();
     const banco = getBanco();
     banco.forEach((item, indice) => criarItem(item.tarefa, item.status, indice));
 
     let doneTask = banco.filter(item => item.status == 'checked');
-    done.innerHTML = doneTask.length;
-
     let undoneTask = banco.filter(item => item.status == '');
-    undone.innerHTML = undoneTask.length;
 
+    done.innerHTML = doneTask.length;
+    undone.innerHTML = undoneTask.length;
     All.innerHTML = banco.length;
+
+    filterItems()
+
 }
 
 const removeItem = (indice) => {

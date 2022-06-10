@@ -12,6 +12,9 @@
             color: brown;
             text-decoration-line: line-through;
         }
+        .hide{
+            display: none;
+        }
 
     </style>
 
@@ -31,9 +34,9 @@
             <div class="d-flex justify-content-center mb-2">
                 <div class="btn-group">
                     <button type="button" class="clearBtn  btn btn-danger">Clear</button>
-                    <button type="button" class="allBtn btn btn-primary ">All <span class="numberAll badge bg-danger"></span></button>
-                    <button type="button" class="undoneBtn btn btn-primary ">Undone <span class="numberTask badge bg-danger"></span></button>
-                    <button type="button" class="doneBtn btn btn-primary ">Done <span class="numberDone badge bg-danger"></span></button>
+                    <button type="button" class="btnFilter active btn btn-primary ">All <span class="numberAll badge bg-danger"></span></button>
+                    <button type="button" class="btnFilter btn btn-primary ">Undone <span class="numberTask badge bg-danger"></span></button>
+                    <button type="button" class="btnFilter btn btn-primary ">Done <span class="numberDone badge bg-danger"></span></button>
                 </div>
             </div>
         </div>
